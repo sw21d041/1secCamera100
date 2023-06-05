@@ -103,7 +103,7 @@ export default function App() {
       <Button title="Take video" onPress={() => takeVideo()} />
       <View style={styles.videoListContainer}>
         <Text style={styles.videoListTitle}>Stored Videos:</Text>
-        <ScrollView>
+        <ScrollView style={styles.scrollView}>
           {recordings.map((item, index) => (
             <View style={styles.videoItem} key={index}>
               <Button title={'video'} onPress={() => video.current.loadAsync({ uri: item })} />
@@ -113,6 +113,7 @@ export default function App() {
       </View>
     </View>
   );
+  
 }
 
 const styles = StyleSheet.create({
@@ -144,12 +145,11 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   videoItem: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
+    height: 100,
+    width: 100,
     marginBottom: 10,
   },
-  sview: {
-    height: '100px',
+  scrollView: {
+    maxHeight: 100,
   },
 });

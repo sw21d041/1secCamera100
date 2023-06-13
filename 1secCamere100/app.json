@@ -14,8 +14,18 @@
           "savePhotosPermission": "Allow $(PRODUCT_NAME) to save photos.",
           "isAccessMediaLocationEnabled": true
         }
-      ]
+      ],
+      
+        [
+          "expo-av",
+          {
+            "microphonePermission": "Allow $(PRODUCT_NAME) to access your microphone."
+          }
+        ]
+      
     ],
+
+    
     "name": "1secCamere100",
     "slug": "1secCamere100",
     "version": "1.0.0",

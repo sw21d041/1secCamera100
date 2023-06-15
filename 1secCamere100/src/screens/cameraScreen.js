@@ -124,13 +124,13 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     marginHorizontal: 10,
   },
-  buttonText: {
-    backgroundColor: '#007AFF',
-    borderRadius: 5,
-    paddingHorizontal: 20,
-    paddingVertical: 10,
-    marginHorizontal: 10,
-  },
+  // buttonText: {
+  //   backgroundColor: '#007AFF',
+  //   borderRadius: 5,
+  //   paddingHorizontal: 20,
+  //   paddingVertical: 10,
+  //   marginHorizontal: 10,
+  // },
 });
 
 export default CameraScreen;  

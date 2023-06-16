@@ -23,8 +23,8 @@ function App() {
   return (
     <NavigationContainer>
       <Tab.Navigator>
-        <Tab.Screen name="cameraScreen" component={CameraScreen}/>
-        <Tab.Screen name="VideoStackComponent" component={VideoStackComponent} />
+        <Tab.Screen options={{headerShown:false}} name="cameraScreen" component={CameraScreen}/>
+        <Tab.Screen options={{headerShown:false}} name="VideoStackComponent" component={VideoStackComponent} />
 
       </Tab.Navigator>
     </NavigationContainer>

@@ -2,7 +2,7 @@ import React, { useEffect, useState, useRef } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { Camera } from 'expo-camera';
 import * as FileSystem from 'expo-file-system';
-
+import {Ionicons,AntDesign} from 'react-native-vector-icons';
 const CameraScreen = () => {
   const [hasPermission, setHasPermission] = useState(null);
   const [cameraType, setCameraType] = useState(Camera.Constants.Type.back);
@@ -65,41 +65,43 @@ const CameraScreen = () => {
 
   return (
     <View style={styles.container}>
-       <View style={styles.controls}>
-        <TouchableOpacity
-          style={styles.cameraButton}
-          onPress={startRecording}
+       <View style={{flexDirection:'row',marginBottom:10,}}>
+      <TouchableOpacity
+          onPress={handleZoomIn}
         >
-          <Text style={styles.buttonText}>Record</Text>
+          <AntDesign name="pluscircleo" style={styles.ico2}/>
         </TouchableOpacity>
         <TouchableOpacity
-          style={styles.cameraButton}
-          onPress={toggleCameraType}
+          
+          onPress={handleZoomOut}
         >
-          <Text style={styles.buttonText}>Toggle Camera</Text>
+          <AntDesign name="minuscircleo" style={styles.ico3}/>
         </TouchableOpacity>
-        
-      </View>
+     </View>
       <Camera
         style={styles.camera}
         type={cameraType}
         zoom={zoom}
         ref={cameraRef}
       />
-      <View style={{flexDirection:'row',marginTop:10}}>
-      <TouchableOpacity
-          style={styles.zoomButton}
-          onPress={handleZoomIn}
+      <View style={styles.controls}>
+        <TouchableOpacity
+          style={styles.cameraButton}
+          onPress={startRecording}
         >
-          <Text style={styles.buttonText}>Zoom In</Text>
+          <View style={{height:80, width:80,backgroundColor:'black',borderRadius:65,marginLeft:-10}}>
+          <View style={{height:70, width:70,backgroundColor:'red',borderRadius:65,marginLeft:5,marginTop:5}}></View>
+          </View>
         </TouchableOpacity>
         <TouchableOpacity
-          style={styles.zoomButton}
-          onPress={handleZoomOut}
+         
+          onPress={toggleCameraType}
         >
-          <Text style={styles.buttonText}>Zoom Out</Text>
+          <Ionicons name="camera-reverse-outline" style={styles.ico1}/>
         </TouchableOpacity>
-     </View>
+        
+      </View>
+      
     </View>
   );
 };
@@ -117,16 +119,32 @@ const styles = StyleSheet.create({
   },
   controls: {
     flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginBottom:10
+    // justifyContent: 'center',
+    // alignItems: 'center',
+    // marginBottom:10
   },
   cameraButton: {
-    backgroundColor: '#007AFF',
-    borderRadius: 5,
+    backgroundColor: 'white',
+    borderRadius: 65,
     paddingHorizontal: 20,
     paddingVertical: 10,
     marginHorizontal: 10,
+    height:100,
+    width:100,
+    marginTop:10,
+    marginLeft:130,
+  },
+  ico1:{
+    // backgroundColor: '#007AFF',
+    // borderRadius: 65,
+    // paddingHorizontal: 0,
+    // paddingVertical: 10,
+    // marginHorizontal: 10,
+    marginLeft:80,
+    fontSize:40,
+    marginTop:10,
+    color:'white',
+    
   },
   buttonText: {
     backgroundColor: '#007AFF',
@@ -134,11 +152,21 @@ const styles = StyleSheet.create({
     paddingHorizontal: 5,
     paddingVertical: 5,
     marginHorizontal: 5,
+    marginTop:10,
   },
   zoomButton:{
     width:100,
     height:60
-  }
+  },
+  ico2:{
+   fontSize:30,
+   color:"white",
+   marginRight:220
+  },
+  ico3:{
+    fontSize:30,
+    color:"white"
+   }
 });
 
-export default CameraScreen;  
+export default CameraScreen; 

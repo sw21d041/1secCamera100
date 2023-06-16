@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, FlatList, StyleSheet, Pressable, TouchableOpacity } from 'react-native';
+import { View, Text, FlatList, StyleSheet, TouchableOpacity, Alert } from 'react-native';
 import * as FileSystem from 'expo-file-system';
 
-const VideoLibraryScreen = ({navigation}) => {
+const VideoLibraryScreen = ({ navigation }) => {
   const [videos, setVideos] = useState([]);
 
   useEffect(() => {
@@ -12,7 +12,28 @@ const VideoLibraryScreen = ({navigation}) => {
       const videoFiles = files.filter((file) => file.endsWith('.mov')); // Filter only MOV files
       setVideos(videoFiles);
     })();
-  });
+  }, []);
+
+  const handleDeleteVideo = async (item) => {
+    try {
+      const videoPath = `${FileSystem.documentDirectory}${item}`;
+      await FileSystem.deleteAsync(videoPath);
+      setVideos((prevVideos) => prevVideos.filter((video) => video !== item));
+    } catch (error) {
+      console.log('Error deleting video:', error);
+    }
+  };
+
+  const confirmDeleteVideo = (item) => {
+    Alert.alert(
+      'Delete Video',
+      'Are you sure you want to delete this video?',
+      [
+        { text: 'Cancel', style: 'cancel' },
+        { text: 'Delete', style: 'destructive', onPress: () => handleDeleteVideo(item) },
+      ]
+    );
+  };
 
   return (
     <View style={styles.container}>
@@ -23,8 +44,11 @@ const VideoLibraryScreen = ({navigation}) => {
           data={videos}
           keyExtractor={(item) => item}
           renderItem={({ item }) => (
-
-            <TouchableOpacity style={styles.videoItem} onPress={()=>{navigation.navigate('Video',{item:item})}}>
+            <TouchableOpacity
+              style={styles.videoItem}
+              onPress={() => { navigation.navigate('Video', { item: item }); }}
+              onLongPress={() => confirmDeleteVideo(item)}
+            >
               <Text>{item}</Text>
             </TouchableOpacity>
           )}

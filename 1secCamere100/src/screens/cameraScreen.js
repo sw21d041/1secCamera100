@@ -18,7 +18,7 @@ const CameraScreen = () => {
       const { status } = await Camera.requestMicrophonePermissionsAsync();
       setHasPermission(status === 'granted');
     })();
-  }, []);
+  });
 
   const startRecording = async () => {
     if (cameraRef.current) {
@@ -65,13 +65,7 @@ const CameraScreen = () => {
 
   return (
     <View style={styles.container}>
-      <Camera
-        style={styles.camera}
-        type={cameraType}
-        zoom={zoom}
-        ref={cameraRef}
-      />
-      <View style={styles.controls}>
+       <View style={styles.controls}>
         <TouchableOpacity
           style={styles.cameraButton}
           onPress={startRecording}
@@ -84,7 +78,16 @@ const CameraScreen = () => {
         >
           <Text style={styles.buttonText}>Toggle Camera</Text>
         </TouchableOpacity>
-        <TouchableOpacity
+        
+      </View>
+      <Camera
+        style={styles.camera}
+        type={cameraType}
+        zoom={zoom}
+        ref={cameraRef}
+      />
+      <View style={{flexDirection:'row',marginTop:10}}>
+      <TouchableOpacity
           style={styles.zoomButton}
           onPress={handleZoomIn}
         >
@@ -96,7 +99,7 @@ const CameraScreen = () => {
         >
           <Text style={styles.buttonText}>Zoom Out</Text>
         </TouchableOpacity>
-      </View>
+     </View>
     </View>
   );
 };
@@ -106,6 +109,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+    backgroundColor:'#424547'
   },
   camera: {
     width: '100%',
@@ -115,7 +119,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: 20,
+    marginBottom:10
   },
   cameraButton: {
     backgroundColor: '#007AFF',
@@ -124,13 +128,17 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     marginHorizontal: 10,
   },
-  // buttonText: {
-  //   backgroundColor: '#007AFF',
-  //   borderRadius: 5,
-  //   paddingHorizontal: 20,
-  //   paddingVertical: 10,
-  //   marginHorizontal: 10,
-  // },
+  buttonText: {
+    backgroundColor: '#007AFF',
+    borderRadius: 5,
+    paddingHorizontal: 5,
+    paddingVertical: 5,
+    marginHorizontal: 5,
+  },
+  zoomButton:{
+    width:100,
+    height:60
+  }
 });
 
 export default CameraScreen;  

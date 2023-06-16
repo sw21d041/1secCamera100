@@ -16,14 +16,13 @@
         }
       ],
       
-        [
-          "expo-av",
-          {
-            "microphonePermission": "Allow $(PRODUCT_NAME) to access your microphone."
-          }
-        ]
-      
-    ],
+      [
+        "expo-av",
+        {
+          "microphonePermission": "Allow $(PRODUCT_NAME) to access your microphone."
+        }
+      ]
+  ],
 
     
     "name": "1secCamere100",

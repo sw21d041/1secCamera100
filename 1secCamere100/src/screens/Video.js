@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { View, Text } from 'react-native';
+import { View, StyleSheet } from 'react-native';
 import { Video } from 'expo-av';
 import * as FileSystem from 'expo-file-system';
 
@@ -47,16 +47,27 @@ export default function VideoScreen({ route }) {
   };
 
   return (
-    
-    <View>
+    <View style={styles.container}>
       {isVideoReady && (
         <Video
           ref={videoRef}
-          style={{ width: '100%', height:'100%', aspectRatio: 16 / 9 }}
+          style={styles.videoPlayer}
           useNativeControls
         />
       )}
-      
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  videoPlayer: {
+    width: '100%',
+    height: '100%',
+    aspectRatio: 16 / 9,
+  },
+});

@@ -3,13 +3,13 @@ import { View, Text, FlatList, StyleSheet, TouchableOpacity, Alert } from 'react
 import * as FileSystem from 'expo-file-system';
 
 const VideoLibraryScreen = ({ navigation }) => {
-  const [videos, setVideos] = useState([]);
+  const [videos, setVideos] = useState({});
 
   useEffect(() => {
     (async () => {
       const videosDirectory = FileSystem.documentDirectory;
       const files = await FileSystem.readDirectoryAsync(videosDirectory);
-      const videoFiles = files.filter((file) => file.endsWith('.mov')); // Filter only MOV files
+      const videoFiles = files.filter((file) => file.endsWith('.mov')); 
       setVideos(videoFiles);
     })();
   }, []);

@@ -5,7 +5,7 @@ import * as FileSystem from 'expo-file-system';
 
 export default function VideoScreen({ route }) {
   const { item } = route.params;
-  const videoFileName = item; // Replace with your actual video file name
+  const videoFileName = item;
   const videoRef = useRef(null);
   const [isVideoReady, setIsVideoReady] = useState(false);
 

@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { View, StyleSheet } from 'react-native';
+import { View, StyleSheet, Text } from 'react-native';
 import { Video } from 'expo-av';
 import * as FileSystem from 'expo-file-system';
 
@@ -46,15 +46,27 @@ export default function VideoScreen({ route }) {
     }
   };
 
+  const fileUri = `${FileSystem.documentDirectory+"/"+item}`;
+
+
   return (
     <View style={styles.container}>
-      {isVideoReady && (
+      <Text>{fileUri}</Text>
+      <Video
+  source={{ uri: fileUri }}
+  shouldPlay
+  resizeMode="cover"
+  style={{ width: 300, height: 200 }}
+/>
+
+      {/* {isVideoReady && (
         <Video
+  source={fileUri}
           ref={videoRef}
           style={styles.videoPlayer}
           useNativeControls
         />
-      )}
+      )} */}
     </View>
   );
 }

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, FlatList, StyleSheet, TouchableOpacity, Alert } from 'react-native';
+import { View, Text, FlatList, StyleSheet, TouchableOpacity, Alert, Platform } from 'react-native';
 import * as FileSystem from 'expo-file-system';
 
 const VideoLibraryScreen = ({ navigation }) => {
@@ -9,7 +9,9 @@ const VideoLibraryScreen = ({ navigation }) => {
     (async () => {
       const videosDirectory = FileSystem.documentDirectory;
       const files = await FileSystem.readDirectoryAsync(videosDirectory);
-      const videoFiles = files.filter((file) => file.endsWith('.mov')); 
+      let videoFiles;
+      Platform.OS === "android"? videoFiles = files.filter((file) => file.endsWith(['.mp4'])) : videoFiles = files.filter((file) => file.endsWith(['.mov'])) 
+      // const videoFiles = files.filter((file) => file.endsWith(['.mp4','.mov'])); 
       setVideos(videoFiles);
     })();
   }, []);

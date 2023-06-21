@@ -1,8 +1,8 @@
 import React, { useEffect, useState, useRef } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, Platform } from 'react-native';
 import { Camera } from 'expo-camera';
 import * as FileSystem from 'expo-file-system';
-import { Ionicons, AntDesign,MaterialCommunityIcons} from 'react-native-vector-icons';
+import { Ionicons, AntDesign, MaterialCommunityIcons } from 'react-native-vector-icons';
 import { FlashMode } from 'expo-camera/build/Camera.types';
 
 const CameraScreen = () => {
@@ -26,7 +26,11 @@ const CameraScreen = () => {
   const startRecording = async () => {
     if (cameraRef.current) {
       try {
+        // cameraRef.stopRecording();
         const { uri } = await cameraRef.current.recordAsync({ maxDuration: 1 });
+        // const { uri } = await cameraRef.current.recordAsync();
+        
+        
         const fileName = uri.split('/').pop();
         const newPath = FileSystem.documentDirectory + fileName;
         await FileSystem.moveAsync({
@@ -34,6 +38,7 @@ const CameraScreen = () => {
           to: newPath,
         });
         console.log('Video saved at:', newPath);
+
       } catch (error) {
         console.error('Failed to record video:', error);
       }
@@ -69,6 +74,7 @@ const CameraScreen = () => {
   };
 
   if (hasPermission === null) {
+    console.log('Camera not working');
     return <View />;
   } else if (hasPermission === false) {
     return <Text>No access to camera</Text>;
@@ -80,9 +86,11 @@ const CameraScreen = () => {
         <TouchableOpacity onPress={handleZoomIn}>
           <AntDesign name="pluscircleo" style={styles.ico2} />
         </TouchableOpacity>
-        <TouchableOpacity onPress={toggleFlashlight}>
-          <MaterialCommunityIcons name="lightning-bolt-outline" style={styles.ico5} />
-        </TouchableOpacity>
+        {Platform.OS === 'android' && (
+          <TouchableOpacity onPress={toggleFlashlight}>
+            <MaterialCommunityIcons name="lightning-bolt-outline" style={styles.ico5} />
+          </TouchableOpacity>
+        )}
         <TouchableOpacity onPress={handleZoomOut}>
           <AntDesign name="minuscircleo" style={styles.ico3} />
         </TouchableOpacity>
@@ -120,7 +128,6 @@ const CameraScreen = () => {
         <TouchableOpacity onPress={toggleCameraType}>
           <Ionicons name="camera-reverse-outline" style={styles.ico1} />
         </TouchableOpacity>
-        
       </View>
     </View>
   );
@@ -183,11 +190,11 @@ const styles = StyleSheet.create({
     color: 'white',
     marginTop: 10,
   },
-  ico5:{
-    fontSize:35,
-    color:'white',
-    marginLeft:-120,
-  }
+  ico5: {
+    fontSize: 35,
+    color: 'white',
+    marginLeft: -120,
+  },
 });
 
 export default CameraScreen;

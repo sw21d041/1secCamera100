@@ -86,11 +86,11 @@ const CameraScreen = () => {
         <TouchableOpacity onPress={handleZoomIn}>
           <AntDesign name="pluscircleo" style={styles.ico2} />
         </TouchableOpacity>
-        {Platform.OS === 'android' && (
+        {/* {Platform.OS === 'android' && ( */}
           <TouchableOpacity onPress={toggleFlashlight}>
             <MaterialCommunityIcons name="lightning-bolt-outline" style={styles.ico5} />
           </TouchableOpacity>
-        )}
+        {/* )} */}
         <TouchableOpacity onPress={handleZoomOut}>
           <AntDesign name="minuscircleo" style={styles.ico3} />
         </TouchableOpacity>

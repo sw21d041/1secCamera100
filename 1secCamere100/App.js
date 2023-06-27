@@ -52,7 +52,7 @@ function App() {
 const styles = StyleSheet.create({
   tabBarStyle: {
     backgroundColor: '#424547',
-    height: 60,
+    height: 75,
   },
   tabBarIconStyle: {
     marginTop: 5,

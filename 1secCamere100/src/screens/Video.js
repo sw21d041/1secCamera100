@@ -1,9 +1,12 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { View, StyleSheet, Text } from 'react-native';
+import { View, StyleSheet, Text,TouchableOpacity } from 'react-native';
 import { Video } from 'expo-av';
 import * as FileSystem from 'expo-file-system';
 
-export default function VideoScreen({ route }) {
+
+
+export default function VideoScreen({ route,videoDate ,videoUrl}) {
+
   const { item } = route.params;
   const videoFileName = item;
   const videoRef = useRef(null);

@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { View, StyleSheet, Text,TouchableOpacity } from 'react-native';
+import { View, StyleSheet, Text,TouchableOpacity, DatePickerIOSBase } from 'react-native';
 import { Video } from 'expo-av';
 import * as FileSystem from 'expo-file-system';
 
@@ -54,22 +54,15 @@ export default function VideoScreen({ route,videoDate ,videoUrl}) {
 
   return (
     <View style={styles.container}>
-      <Text>{fileUri}</Text>
+      {/* <Text>{fileUri}</Text> */}
       <Video
   source={{ uri: fileUri }}
   shouldPlay
   resizeMode="cover"
-  style={{ width: 300, height: 200 }}
+  style={{ width: '100%', height: 400 }}
 />
 
-      {/* {isVideoReady && (
-        <Video
-  source={fileUri}
-          ref={videoRef}
-          style={styles.videoPlayer}
-          useNativeControls
-        />
-      )} */}
+      
     </View>
   );
 }
@@ -79,6 +72,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+    backgroundColor:'black'
   },
   videoPlayer: {
     width: '100%',

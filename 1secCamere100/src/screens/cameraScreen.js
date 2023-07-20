@@ -1,9 +1,19 @@
-import React, { useEffect, useState, useRef } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, Platform } from 'react-native';
-import { Camera } from 'expo-camera';
-import * as FileSystem from 'expo-file-system';
-import { Ionicons, AntDesign, MaterialCommunityIcons } from 'react-native-vector-icons';
-import { FlashMode } from 'expo-camera/build/Camera.types';
+import React, { useEffect, useState, useRef } from "react";
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  StyleSheet,
+  Platform,
+} from "react-native";
+import { Camera } from "expo-camera";
+import * as FileSystem from "expo-file-system";
+import {
+  Ionicons,
+  AntDesign,
+  MaterialCommunityIcons,
+} from "react-native-vector-icons";
+import { FlashMode } from "expo-camera/build/Camera.types";
 
 const CameraScreen = () => {
   const [hasPermission, setHasPermission] = useState(null);
@@ -15,11 +25,11 @@ const CameraScreen = () => {
   useEffect(() => {
     (async () => {
       const { status } = await Camera.requestCameraPermissionsAsync();
-      setHasPermission(status === 'granted');
+      setHasPermission(status === "granted");
     })();
     (async () => {
       const { status } = await Camera.requestMicrophonePermissionsAsync();
-      setHasPermission(status === 'granted');
+      setHasPermission(status === "granted");
     })();
   });
 
@@ -29,18 +39,16 @@ const CameraScreen = () => {
         // cameraRef.stopRecording();
         const { uri } = await cameraRef.current.recordAsync({ maxDuration: 1 });
         // const { uri } = await cameraRef.current.recordAsync();
-        
-        
-        const fileName = uri.split('/').pop();
+
+        const fileName = uri.split("/").pop();
         const newPath = FileSystem.documentDirectory + fileName;
         await FileSystem.moveAsync({
           from: uri,
           to: newPath,
         });
-        console.log('Video saved at:', newPath);
-
+        console.log("Video saved at:", newPath);
       } catch (error) {
-        console.error('Failed to record video:', error);
+        console.error("Failed to record video:", error);
       }
     }
   };
@@ -74,7 +82,7 @@ const CameraScreen = () => {
   };
 
   if (hasPermission === null) {
-    console.log('Camera not working');
+    console.log("Camera not working");
     return <View />;
   } else if (hasPermission === false) {
     return <Text>No access to camera</Text>;
@@ -82,14 +90,17 @@ const CameraScreen = () => {
 
   return (
     <View style={styles.container}>
-      <View style={{ flexDirection: 'row', marginBottom: 10 }}>
+      <View style={{ flexDirection: "row", marginBottom: 10 }}>
         <TouchableOpacity onPress={handleZoomIn}>
           <AntDesign name="pluscircleo" style={styles.ico2} />
         </TouchableOpacity>
         {/* {Platform.OS === 'android' && ( */}
-          <TouchableOpacity onPress={toggleFlashlight}>
-            <MaterialCommunityIcons name="lightning-bolt-outline" style={styles.ico5} />
-          </TouchableOpacity>
+        <TouchableOpacity onPress={toggleFlashlight}>
+          <MaterialCommunityIcons
+            name="lightning-bolt-outline"
+            style={styles.ico5}
+          />
+        </TouchableOpacity>
         {/* )} */}
         <TouchableOpacity onPress={handleZoomOut}>
           <AntDesign name="minuscircleo" style={styles.ico3} />
@@ -108,7 +119,7 @@ const CameraScreen = () => {
             style={{
               height: 80,
               width: 80,
-              backgroundColor: 'black',
+              backgroundColor: "black",
               borderRadius: 65,
               marginLeft: -10,
             }}
@@ -117,7 +128,7 @@ const CameraScreen = () => {
               style={{
                 height: 70,
                 width: 70,
-                backgroundColor: 'red',
+                backgroundColor: "red",
                 borderRadius: 65,
                 marginLeft: 5,
                 marginTop: 5,
@@ -136,19 +147,19 @@ const CameraScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#424547',
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "#424547",
   },
   camera: {
-    width: '100%',
-    height: '70%',
+    width: "100%",
+    height: "70%",
   },
   controls: {
-    flexDirection: 'row',
+    flexDirection: "row",
   },
   cameraButton: {
-    backgroundColor: 'white',
+    backgroundColor: "white",
     borderRadius: 65,
     paddingHorizontal: 20,
     paddingVertical: 10,
@@ -162,10 +173,10 @@ const styles = StyleSheet.create({
     marginLeft: 80,
     fontSize: 40,
     marginTop: 10,
-    color: 'white',
+    color: "white",
   },
   buttonText: {
-    backgroundColor: '#007AFF',
+    backgroundColor: "#007AFF",
     borderRadius: 5,
     paddingHorizontal: 5,
     paddingVertical: 5,
@@ -178,21 +189,21 @@ const styles = StyleSheet.create({
   },
   ico2: {
     fontSize: 30,
-    color: 'white',
+    color: "white",
     marginRight: 220,
   },
   ico3: {
     fontSize: 30,
-    color: 'white',
+    color: "white",
   },
   ico4: {
     fontSize: 40,
-    color: 'white',
+    color: "white",
     marginTop: 10,
   },
   ico5: {
     fontSize: 35,
-    color: 'white',
+    color: "white",
     marginLeft: -120,
   },
 });

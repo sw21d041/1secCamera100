@@ -5,12 +5,13 @@ import * as FileSystem from 'expo-file-system';
 
 
 
-export default function VideoScreen({ route,videoDate ,videoUrl}) {
+export default function VideoScreen({ route}) {
 
-  const { item } = route.params;
+  const { item,videoUrl} = route.params;
   const videoFileName = item;
   const videoRef = useRef(null);
   const [isVideoReady, setIsVideoReady] = useState(false);
+  const [videoDate, setVideoDate] = useState(null);
 
   useEffect(() => {
     const loadVideoFile = async () => {
@@ -20,6 +21,7 @@ export default function VideoScreen({ route,videoDate ,videoUrl}) {
 
         if (fileInfo.exists) {
           playVideo(fileUri);
+          setVideoDate(item.date);
         } else {
           console.log('Video file does not exist');
         }
@@ -55,8 +57,9 @@ export default function VideoScreen({ route,videoDate ,videoUrl}) {
   return (
     <View style={styles.container}>
       {/* <Text>{fileUri}</Text> */}
+      {videoDate && <Text style={styles.videoDateText}>{videoDate}</Text>}
       <Video
-  source={{ uri: fileUri }}
+  source={{ uri: videoUrl }}
   shouldPlay
   resizeMode="cover"
   style={{ width: '100%', height: 400 }}

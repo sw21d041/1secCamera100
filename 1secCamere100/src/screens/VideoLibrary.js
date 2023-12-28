@@ -13,6 +13,7 @@ import {
 import * as FileSystem from "expo-file-system";
 import * as VideoThumbnails from "expo-video-thumbnails";
 
+
 const VideoLibraryScreen = ({ navigation }) => {
   const [videos, setVideos] = useState({});
   const [image, setImage] = useState(null);
@@ -53,50 +54,59 @@ const VideoLibraryScreen = ({ navigation }) => {
 
   const generateThumbnail = async () => {
     try {
-      const { uri } = await VideoThumbnails.getThumbnailAsync(
-        // "http://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4",
-        "file:///data/user/0/host.exp.exponent/files/ExperienceData/%2540anonymous%252F1secCamere100-d7344588-2c85-4207-ab71-bde8cb4d2cfc/8b6c6656-de2d-4d5a-9989-1de6a5a4ae50.mp4",
-        {
-          time: 500,
-        }
-      );
-      setImage(uri);
-      console.log(uri);
+       const { status } = await Camera.requestPermissionsAsync();
+       if (status === "granted") {
+         // Proceed with thumbnail generation
+         const videosDirectory = FileSystem.documentDirectory;
+         const videoFiles = await FileSystem.readDirectoryAsync(videosDirectory);
+         const videoPath = `${videosDirectory}${videoFiles[0]}`; // Use the correct index or logic to get the desired video file
+         const { uri } = await VideoThumbnails.getThumbnailAsync(videoPath, {
+           time: 500,
+         });
+         setImage(uri);
+         console.log(uri);
+       } else {
+         console.log("Camera permission denied");
+       }
     } catch (e) {
-      console.warn(e);
+       console.warn(e);
     }
-  };
+   };
+   
+
+  
 
   return (
     <View style={styles.container}>
       <View style={styles.imagecontainer}>
         <Button onPress={generateThumbnail} title="Generate thumbnail" />
         {image && <Image source={{ uri: image }} style={styles.image} />}
+
         {/* <Text>{image}</Text> */}
       </View>
 
       {videos.length === 0 ? (
-        <Text>No recorded videos found</Text>
-      ) : (
-        <FlatList
-          data={videos}
-          keyExtractor={(item) => item}
-          renderItem={({ item }) => (
-            <TouchableOpacity
-              style={styles.videoItem}
-              onPress={() => {
-                navigation.navigate("Video", { item: item });
-              }}
-              onLongPress={() => confirmDeleteVideo(item)}
-            >
-              <Text>{item}</Text>
-              {/* {console.log(FileSystem.documentDirectory, item)} */}
-              {/* <Text>{item.date}</Text> */}
-            </TouchableOpacity>
-          )}
-        />
+    <Text>No recorded videos found</Text>
+  ) : (
+    <FlatList
+      data={videos}
+      keyExtractor={(item) => item}
+      renderItem={({ item }) => (
+        <TouchableOpacity
+          style={styles.videoItem}
+          onPress={() => {
+            navigation.navigate("Video", { item: item });
+          }}
+          onLongPress={() => confirmDeleteVideo(item)}
+        >
+          <Text>{item}</Text>
+          {/* {console.log(FileSystem.documentDirectory, item)} */}
+          {/* <Text>{item.date}</Text> */}
+        </TouchableOpacity>
       )}
-    </View>
+    />
+  )}
+</View>
   );
 };
 
